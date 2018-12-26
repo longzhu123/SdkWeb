@@ -115,7 +115,6 @@
             </tr>
           </table>
         </el-form>
-
         <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addDialogVisible = false">保 存</el-button>
