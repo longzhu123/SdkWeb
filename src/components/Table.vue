@@ -89,9 +89,9 @@
       <el-dialog
         title="添加"
         :visible.sync="addDialogVisible"
-        center="true"
+        center=true
       >
-        <el-form :model="addForm">
+        <el-form :model="addForm" :rules="rules">
           <table id="addTable">
             <tr>
               <td>
@@ -130,7 +130,7 @@
         title="查看详情"
         :visible.sync="viewDialogVisible"
         width="50%"
-        center="true"
+        center=true
       >
         <span>查看详情</span>
         <span slot="footer" class="dialog-footer">
@@ -145,7 +145,7 @@
         title="修改"
         :visible.sync="updateDialogVisible"
         width="50%"
-        center="true"
+        center=true
       >
         <span>修改</span>
         <span slot="footer" class="dialog-footer">
@@ -184,6 +184,14 @@
           operContent: '',
           taskTimeSpan: ''
         },
+        rules:{
+          ip: [{ required: true, message: '请输入ip', trigger: 'change' }],
+          operContent: [{ required: true, message: '请输入操作内容', trigger: 'change' }],
+          taskTimeSpan: [
+            { required: true, message: '请输入操作耗时', trigger: 'change' },
+            { type: "number", message: '请输入数值', trigger: 'change' }
+          ],
+        }
       }
     },
     //页面加载方法
