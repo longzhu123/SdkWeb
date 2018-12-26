@@ -1,8 +1,6 @@
-export default class StringConstants {
-  //后台Url
-  static SERVER_URL = "http://localhost"
-  //每页显示的记录数
-  static  PAGE_SIZE = 10;
-  //默认页数
-  static DEFAULT_PAGE_CURRENT = 1
-}
+//后台Url
+export const SERVER_URL = "http://localhost"
+//每页显示的记录数
+export const PAGE_SIZE = 10
+//默认页数
+export const DEFAULT_PAGE_CURRENT = 10

@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  import StringConstants from "../constants/StringConstants";
+  import * as StringConstants from "../constants/StringConstants";
   import util from "../util/util";
 
   export default {
@@ -99,7 +99,8 @@
         tableCurrentSize: 10,//表格当前显示的记录数
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
-        searchForm: {}//搜索参数对象
+        searchForm: {},//搜索参数对象,
+        token:""
       }
     },
     //页面加载方法
@@ -107,7 +108,7 @@
       let defaultParams = {
         current: StringConstants.DEFAULT_PAGE_CURRENT,
         size: StringConstants.PAGE_SIZE,
-        token: "335aa046ae17494d8a16b56f4fe5f9b3"
+        token: this.token
       };
       this.getDataList(defaultParams);
     },
@@ -142,7 +143,7 @@
         let defaultParams = {
           current: this.tableCurrent,
           size: this.tableCurrentSize,
-          token: "335aa046ae17494d8a16b56f4fe5f9b3"
+          token: this.token
         };
         this.getDataList(defaultParams);
       },
@@ -152,7 +153,7 @@
         let defaultParams = {
           current: this.tableCurrent,
           size: this.tableCurrentSize,
-          token: "335aa046ae17494d8a16b56f4fe5f9b3"
+          token: this.token
         };
         this.getDataList(defaultParams);
       },
@@ -174,7 +175,7 @@
           }
           let options = {
             url: StringConstants.SERVER_URL + "/sysUser/deleteBatchSysUserByIds",
-            params: {"token": "335aa046ae17494d8a16b56f4fe5f9b3", "ids": ids}
+            params: {"token": this.token, "ids": ids}
           };
           this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
             let {status} = response;
@@ -186,7 +187,7 @@
               let loadDataOptions = {
                 current: this.tableCurrent,
                 size: this.tableCurrentSize,
-                token: "335aa046ae17494d8a16b56f4fe5f9b3",
+                token: this.token,
               };
               let searchOptions = Object.assign(loadDataOptions, this.searchForm);
               this.getDataList(searchOptions);
@@ -211,7 +212,7 @@
         let pageOptions = {
           current: this.tableCurrent,
           size: this.tableCurrentSize,
-          token: "335aa046ae17494d8a16b56f4fe5f9b3",
+          token: this.token,
         };
         //搜索参数对象合并
         let searchOptions = Object.assign(searchForm, pageOptions);
@@ -253,7 +254,7 @@
         let defaultParams = {
           current: StringConstants.DEFAULT_PAGE_CURRENT,
           size: StringConstants.PAGE_SIZE,
-          token: "335aa046ae17494d8a16b56f4fe5f9b3"
+          token: this.token
         };
         this.getDataList(defaultParams);
       }
