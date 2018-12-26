@@ -91,30 +91,30 @@
         :visible.sync="addDialogVisible"
         :center="true"
       >
-        <el-form :model="addForm" :rules="rules">
+        <el-form :model="addForm" :rules="editRules" ref="addForm">
           <table id="addTable">
             <tr>
               <td>
-                <el-form-item label="ip" label-width="80px" required>
+                <el-form-item label="ip" label-width="80px" prop="ip">
                   <el-input v-model="addForm.ip" placeholder="请输入ip"></el-input>
                 </el-form-item>
               </td>
               <td>
-                <el-form-item label="操作内容" label-width="90px" required>
+                <el-form-item label="操作内容" label-width="90px" prop="operContent">
                   <el-input v-model="addForm.operContent" placeholder="请输入操作内容"></el-input>
                 </el-form-item>
               </td>
             </tr>
-
             <tr>
               <td colspan="2">
-                <el-form-item label="操作耗时" label-width="80px" required>
-                  <el-input v-model="addForm.taskTimeSpan" placeholder="请输入操作耗时"></el-input>
+                <el-form-item label="操作耗时" label-width="80px"  prop="taskTimeSpan">
+                  <el-input type="number" v-model.number="addForm.taskTimeSpan"  placeholder="请输入操作耗时"></el-input>
                 </el-form-item>
               </td>
             </tr>
           </table>
         </el-form>
+
         <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addDialogVisible = false">保 存</el-button>
@@ -183,12 +183,11 @@
           operContent: '',
           taskTimeSpan: ''
         },
-        rules:{
-          ip: [{ required: true, message: '请输入ip', trigger: 'change' }],
-          operContent: [{ required: true, message: '请输入操作内容', trigger: 'change' }],
+        editRules: {
+          ip: [{required: true, message: '请输入ip', trigger: 'blur'}],
+          operContent: [{required: true, message: '请输入操作内容', trigger: 'blur'}],
           taskTimeSpan: [
-            { required: true, message: '请输入操作耗时', trigger: 'change' },
-            { type: "number", message: '请输入数值', trigger: 'change' }
+            {required: true, message: '请输入操作耗时'}
           ],
         }
       }
@@ -345,7 +344,7 @@
           token: this.token
         };
         this.getDataList(defaultParams);
-      },
+      }
     }
   }
 </script>
@@ -370,7 +369,7 @@
     margin-top: 10px;
   }
 
-  #addTable{
+  #addTable {
     width: 100%;
   }
 </style>
