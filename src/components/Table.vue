@@ -3,11 +3,11 @@
     <!--表格搜索工具栏-->
     <div id="searchBar">
       <el-form :model="searchForm" :inline="true" ref="searchForm">
-        <el-form-item prop="email" label="邮箱">
-          <el-input placeholder="邮箱" v-model="searchForm.email" size="small"></el-input>
+        <el-form-item prop="ip" ip="ip">
+          <el-input placeholder="ip" v-model="searchForm.ip" size="small"></el-input>
         </el-form-item>
-        <el-form-item prop="nickName" label="昵称">
-          <el-input placeholder="昵称" v-model="searchForm.nickName" size="small"></el-input>
+        <el-form-item prop="operContent" label="操作内容">
+          <el-input placeholder="操作内容" v-model="searchForm.operContent" size="small"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" size="small" icon="el-icon-search" @click="search">搜索</el-button>
@@ -34,22 +34,22 @@
         width="55">
       </el-table-column>
       <el-table-column
-        prop="email"
-        label="邮箱"
+        prop="ip"
+        label="ip"
         align="center"
         show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
-        prop="nickName"
-        label="昵称"
+        prop="operContent"
+        label="操作内容"
         align="center"
         show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
-        prop="ewCoin"
-        label="优币"
+        prop="taskTimeSpan"
+        label="操作耗时"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -100,7 +100,7 @@
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
-        token:"1499dff67531485c9887a2c18c39c5da"
+        token:"729ad6e7b52c40ad947672449fc3a6c1"
       }
     },
     //页面加载方法
@@ -119,7 +119,7 @@
        */
       getDataList(params) {
         let options = {
-          url: StringConstants.SERVER_URL + "/sysUser/likeSearchSysUserByPage",
+          url: StringConstants.SERVER_URL + "/sysLogOperate/likeSearchSysLogOperateByPage",
           params
         };
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
@@ -140,12 +140,14 @@
       //分页组件Size改变event
       handleSizeChange(val) {
         this.tableCurrentSize = val;
+        this.tableCurrent=1;
         let defaultParams = {
           current: this.tableCurrent,
           size: this.tableCurrentSize,
           token: this.token
         };
-        this.getDataList(defaultParams);
+        let searchParams = Object.assign(defaultParams,this.searchForm);
+        this.getDataList(searchParams);
       },
       //当前current改变event
       handleCurrentChange(val) {
@@ -174,7 +176,7 @@
             return;
           }
           let options = {
-            url: StringConstants.SERVER_URL + "/sysUser/deleteBatchSysUserByIds",
+            url: StringConstants.SERVER_URL + "/sysLogOperate/deleteBatchSysLogOperateByIds",
             params: {"token": this.token, "ids": ids}
           };
           this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
@@ -217,7 +219,7 @@
         //搜索参数对象合并
         let searchOptions = Object.assign(searchForm, pageOptions);
         let options = {
-          url: StringConstants.SERVER_URL + "/sysUser/likeSearchSysUserByPage",
+          url: StringConstants.SERVER_URL + "/sysLogOperate/likeSearchSysLogOperateByPage",
           params: searchOptions
         };
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
@@ -255,7 +257,6 @@
           size: StringConstants.PAGE_SIZE,
           token: this.token
         };
-        debugger;
         this.getDataList(defaultParams);
       }
     }
