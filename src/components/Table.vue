@@ -100,7 +100,7 @@
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
-        token:"729ad6e7b52c40ad947672449fc3a6c1"
+        token: "729ad6e7b52c40ad947672449fc3a6c1"
       }
     },
     //页面加载方法
@@ -140,24 +140,20 @@
       //分页组件Size改变event
       handleSizeChange(val) {
         this.tableCurrentSize = val;
-        this.tableCurrent=1;
-        let defaultParams = {
-          current: this.tableCurrent,
-          size: this.tableCurrentSize,
-          token: this.token
-        };
-        let searchParams = Object.assign(defaultParams,this.searchForm);
+        this.tableCurrent = 1;
+        this.searchForm.current = this.tableCurrent;
+        this.searchForm.size = this.tableCurrentSize;
+        let searchParams = this.searchForm;
         this.getDataList(searchParams);
       },
       //当前current改变event
       handleCurrentChange(val) {
         this.tableCurrent = val;
-        let defaultParams = {
-          current: this.tableCurrent,
-          size: this.tableCurrentSize,
-          token: this.token
-        };
-        this.getDataList(defaultParams);
+        this.searchForm.current = this.tableCurrent;
+        this.searchForm.token=this.token;
+        this.searchForm.size=this.tableCurrentSize;
+        let searchParams = this.searchForm;
+        this.getDataList(searchParams);
       },
       //批量删除click事件
       batchDelete() {
