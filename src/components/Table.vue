@@ -89,12 +89,36 @@
       <el-dialog
         title="添加"
         :visible.sync="addDialogVisible"
-        width="30%"
+        center="true"
       >
-        <span>添加</span>
+        <el-form :model="addForm">
+          <table id="addTable">
+            <tr>
+              <td>
+                <el-form-item label="ip" label-width="70px">
+                  <el-input v-model="addForm.ip" placeholder="请输入ip"></el-input>
+                </el-form-item>
+              </td>
+              <td>
+                <el-form-item label="操作内容" label-width="80px">
+                  <el-input v-model="addForm.operContent" placeholder="请输入操作内容"></el-input>
+                </el-form-item>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="2">
+                <el-form-item label="操作耗时" label-width="70px">
+                  <el-input v-model="addForm.taskTimeSpan" placeholder="请输入操作耗时"></el-input>
+                </el-form-item>
+              </td>
+            </tr>
+          </table>
+        </el-form>
+
         <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">保 存</el-button>
       </span>
       </el-dialog>
 
@@ -105,12 +129,12 @@
       <el-dialog
         title="查看详情"
         :visible.sync="viewDialogVisible"
-        width="30%"
+        width="50%"
+        center="true"
       >
         <span>查看详情</span>
         <span slot="footer" class="dialog-footer">
         <el-button @click="viewDialogVisible=false">取 消</el-button>
-        <el-button type="primary" @click="viewDialogVisible=false">确 定</el-button>
       </span>
       </el-dialog>
 
@@ -120,12 +144,13 @@
       <el-dialog
         title="修改"
         :visible.sync="updateDialogVisible"
-        width="30%"
+        width="50%"
+        center="true"
       >
         <span>修改</span>
         <span slot="footer" class="dialog-footer">
         <el-button @click="updateDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="updateDialogVisible = false">保 存</el-button>
       </span>
       </el-dialog>
 
@@ -151,9 +176,14 @@
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
         token: "729ad6e7b52c40ad947672449fc3a6c1",
-        addDialogVisible:false,
-        viewDialogVisible:false,
-        updateDialogVisible:false
+        addDialogVisible: false,
+        viewDialogVisible: false,
+        updateDialogVisible: false,
+        addForm: {
+          ip: '',
+          operContent: '',
+          taskTimeSpan: ''
+        },
       }
     },
     //页面加载方法
@@ -288,11 +318,11 @@
       },
       //编辑click事件
       handleEdit() {
-        this.updateDialogVisible=true;
+        this.updateDialogVisible = true;
       },
       //查看click事件
       handleView() {
-        this.viewDialogVisible=true;
+        this.viewDialogVisible = true;
       },
       //表格Checkbox选择事件
       handleSelectionChange(val) {
@@ -330,5 +360,9 @@
     text-align: right;
     margin-right: 30px;
     margin-top: 10px;
+  }
+
+  #addTable{
+    width: 100%;
   }
 </style>
