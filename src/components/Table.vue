@@ -131,10 +131,8 @@
         width="50%"
         :center="true"
       >
-        <span>查看详情</span>
-        <span slot="footer" class="dialog-footer">
-        <el-button @click="viewDialogVisible=false">取 消</el-button>
-      </span>
+
+        <span slot="footer" class="dialog-footer"></span>
       </el-dialog>
 
     </div>
