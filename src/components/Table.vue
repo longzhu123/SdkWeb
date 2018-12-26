@@ -19,7 +19,7 @@
     </div>
     <!--表格操作工具栏-->
     <div id="tableOperaBar">
-      <el-button type="success" size="small" icon="el-icon-plus">添加</el-button>
+      <el-button type="success" size="small" icon="el-icon-plus" @click="addDialogVisible=true">添加</el-button>
       <el-button type="danger" size="small" icon="el-icon-delete" @click="batchDelete">删除</el-button>
     </div>
     <el-table
@@ -71,6 +71,7 @@
       </el-table-column>
     </el-table>
 
+    <!--分页组件-->
     <div class="block">
       <el-pagination
         @size-change="handleSizeChange"
@@ -82,7 +83,56 @@
         :total="tableTotalSize">
       </el-pagination>
     </div>
+
+    <!--添加模态框-->
+    <div id="addDialog">
+      <el-dialog
+        title="添加"
+        :visible.sync="addDialogVisible"
+        width="30%"
+      >
+        <span>添加</span>
+        <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+      </span>
+      </el-dialog>
+
+    </div>
+
+    <!--查看详情模态框-->
+    <div id="viewDetailDialog">
+      <el-dialog
+        title="查看详情"
+        :visible.sync="viewDialogVisible"
+        width="30%"
+      >
+        <span>查看详情</span>
+        <span slot="footer" class="dialog-footer">
+        <el-button @click="viewDialogVisible=false">取 消</el-button>
+        <el-button type="primary" @click="viewDialogVisible=false">确 定</el-button>
+      </span>
+      </el-dialog>
+
+    </div>
+    <!--修改模态框-->
+    <div id="updateDialog">
+      <el-dialog
+        title="修改"
+        :visible.sync="updateDialogVisible"
+        width="30%"
+      >
+        <span>修改</span>
+        <span slot="footer" class="dialog-footer">
+        <el-button @click="updateDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="updateDialogVisible = false">确 定</el-button>
+      </span>
+      </el-dialog>
+
+    </div>
+
   </div>
+
 </template>
 
 <script>
@@ -100,7 +150,10 @@
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
-        token: "729ad6e7b52c40ad947672449fc3a6c1"
+        token: "729ad6e7b52c40ad947672449fc3a6c1",
+        addDialogVisible:false,
+        viewDialogVisible:false,
+        updateDialogVisible:false
       }
     },
     //页面加载方法
@@ -150,8 +203,8 @@
       handleCurrentChange(val) {
         this.tableCurrent = val;
         this.searchForm.current = this.tableCurrent;
-        this.searchForm.token=this.token;
-        this.searchForm.size=this.tableCurrentSize;
+        this.searchForm.token = this.token;
+        this.searchForm.size = this.tableCurrentSize;
         let searchParams = this.searchForm;
         this.getDataList(searchParams);
       },
@@ -235,11 +288,11 @@
       },
       //编辑click事件
       handleEdit() {
-        alert("编辑")
+        this.updateDialogVisible=true;
       },
       //查看click事件
       handleView() {
-        alert("查看")
+        this.viewDialogVisible=true;
       },
       //表格Checkbox选择事件
       handleSelectionChange(val) {
@@ -254,7 +307,7 @@
           token: this.token
         };
         this.getDataList(defaultParams);
-      }
+      },
     }
   }
 </script>
