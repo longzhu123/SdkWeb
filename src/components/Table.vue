@@ -100,7 +100,7 @@
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
-        token:""
+        token:"1499dff67531485c9887a2c18c39c5da"
       }
     },
     //页面加载方法
@@ -249,13 +249,13 @@
       },
       //重置搜索表单click事件
       resetForm(formName) {
-        console.log(this.$refs[formName]);
         this.$refs[formName].resetFields();
         let defaultParams = {
           current: StringConstants.DEFAULT_PAGE_CURRENT,
           size: StringConstants.PAGE_SIZE,
           token: this.token
         };
+        debugger;
         this.getDataList(defaultParams);
       }
     }
