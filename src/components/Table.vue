@@ -95,12 +95,12 @@
           <table id="addTable">
             <tr>
               <td>
-                <el-form-item label="ip" label-width="70px">
+                <el-form-item label="ip" label-width="80px" required>
                   <el-input v-model="addForm.ip" placeholder="请输入ip"></el-input>
                 </el-form-item>
               </td>
               <td>
-                <el-form-item label="操作内容" label-width="80px">
+                <el-form-item label="操作内容" label-width="90px" required>
                   <el-input v-model="addForm.operContent" placeholder="请输入操作内容"></el-input>
                 </el-form-item>
               </td>
@@ -108,7 +108,7 @@
 
             <tr>
               <td colspan="2">
-                <el-form-item label="操作耗时" label-width="70px">
+                <el-form-item label="操作耗时" label-width="80px" required>
                   <el-input v-model="addForm.taskTimeSpan" placeholder="请输入操作耗时"></el-input>
                 </el-form-item>
               </td>
