@@ -3,7 +3,7 @@
     <!--表格搜索工具栏-->
     <div id="searchBar">
       <el-form :model="searchForm" :inline="true" ref="searchForm">
-        <el-form-item prop="ip" ip="ip">
+        <el-form-item prop="ip" label="ip">
           <el-input placeholder="ip" v-model="searchForm.ip" size="small"></el-input>
         </el-form-item>
         <el-form-item prop="operContent" label="操作内容">
