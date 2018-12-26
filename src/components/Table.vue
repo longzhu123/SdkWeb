@@ -117,7 +117,7 @@
 
         <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addDialogVisible = false">保 存</el-button>
+        <el-button type="primary" @click="submitEditForm('addForm','add')">保 存</el-button>
       </span>
       </el-dialog>
 
@@ -146,10 +146,32 @@
         width="50%"
         :center="true"
       >
-        <span>修改</span>
+        <el-form :model="updateForm" :rules="editRules" ref="updateForm">
+          <table id="updateTable">
+            <tr>
+              <td>
+                <el-form-item label="ip" label-width="80px" prop="ip">
+                  <el-input v-model="updateForm.ip" placeholder="请输入ip"></el-input>
+                </el-form-item>
+              </td>
+              <td>
+                <el-form-item label="操作内容" label-width="90px" prop="operContent">
+                  <el-input v-model="updateForm.operContent" placeholder="请输入操作内容"></el-input>
+                </el-form-item>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <el-form-item label="操作耗时" label-width="80px"  prop="taskTimeSpan">
+                  <el-input type="number" v-model.number="updateForm.taskTimeSpan"  placeholder="请输入操作耗时"></el-input>
+                </el-form-item>
+              </td>
+            </tr>
+          </table>
+        </el-form>
         <span slot="footer" class="dialog-footer">
         <el-button @click="updateDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="updateDialogVisible = false">保 存</el-button>
+        <el-button type="primary" @click="submitEditForm('updateForm','update')">保 存</el-button>
       </span>
       </el-dialog>
 
@@ -175,15 +197,20 @@
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
         token: "729ad6e7b52c40ad947672449fc3a6c1",
-        addDialogVisible: false,
-        viewDialogVisible: false,
-        updateDialogVisible: false,
-        addForm: {
+        addDialogVisible: false,  //添加模态框是否可见
+        viewDialogVisible: false, //查看模态框是否可见
+        updateDialogVisible: false,//修改模态框是否可见
+        addForm: {  //添加表单的对象
           ip: '',
           operContent: '',
           taskTimeSpan: ''
         },
-        editRules: {
+        updateForm: {  //修改表单的对象
+          ip: '',
+          operContent: '',
+          taskTimeSpan: ''
+        },
+        editRules: {//编辑时表单的校验规则对象
           ip: [{required: true, message: '请输入ip', trigger: 'blur'}],
           operContent: [{required: true, message: '请输入操作内容', trigger: 'blur'}],
           taskTimeSpan: [
@@ -344,6 +371,22 @@
           token: this.token
         };
         this.getDataList(defaultParams);
+      },
+      /**
+       * 提交编辑form
+       * @param formName  表单的ref名称
+       * @param operaName 操作类型名称(add->添加,update->修改)
+       */
+      submitEditForm(formName,operaName){
+        let _this = this;
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            console.log(operaName);
+            console.log(_this.addForm);
+          } else {
+            return false;
+          }
+        });
       }
     }
   }
@@ -369,7 +412,7 @@
     margin-top: 10px;
   }
 
-  #addTable {
+  #addTable,#updateTable{
     width: 100%;
   }
 </style>
