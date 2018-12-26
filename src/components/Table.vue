@@ -89,7 +89,7 @@
       <el-dialog
         title="添加"
         :visible.sync="addDialogVisible"
-        center=true
+        :center="true"
       >
         <el-form :model="addForm" :rules="rules">
           <table id="addTable">
@@ -129,7 +129,7 @@
         title="查看详情"
         :visible.sync="viewDialogVisible"
         width="50%"
-        center=true
+        :center="true"
       >
         <span>查看详情</span>
         <span slot="footer" class="dialog-footer">
@@ -144,7 +144,7 @@
         title="修改"
         :visible.sync="updateDialogVisible"
         width="50%"
-        center=true
+        :center="true"
       >
         <span>修改</span>
         <span slot="footer" class="dialog-footer">
@@ -208,6 +208,7 @@
        * @param params 过滤参数对象
        */
       getDataList(params) {
+        let _this = this;
         let options = {
           url: StringConstants.SERVER_URL + "/sysLogOperate/likeSearchSysLogOperateByPage",
           params
@@ -216,9 +217,9 @@
           let {status, data} = response;
           if (status === 200) {
             let handleData = data.data;
-            this.tableData = handleData.records;
-            this.tableCurrent = handleData.current;
-            this.tableTotalSize = handleData.total;
+            _this.tableData = handleData.records;
+            _this.tableCurrent = handleData.current;
+            _this.tableTotalSize = handleData.total;
           } else {
             alert("请求失败")
           }
