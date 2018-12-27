@@ -14,7 +14,8 @@
         </el-form-item>
         <el-form-item label="出生日期">
           <el-form-item prop="beginBorth">
-            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.beginBorth" size="small"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.beginBorth"
+                            size="small"></el-date-picker>
           </el-form-item>
           <span>-&nbsp;</span>
           <el-form-item prop="endBorth">
@@ -143,19 +144,20 @@
             </tr>
             <tr>
               <td>
-                <el-form-item label="年龄" label-width="80px"  prop="age">
-                  <el-input type="number" v-model.number="addForm.age"  placeholder="请输入年龄"></el-input>
+                <el-form-item label="年龄" label-width="80px" prop="age">
+                  <el-input type="number" v-model.number="addForm.age" placeholder="请输入年龄"></el-input>
                 </el-form-item>
               </td>
               <td>
-                <el-form-item label="出生日期" label-width="80px"  prop="borth">
-                  <el-date-picker type="date" placeholder="选择出生日期" v-model="addForm.borth" style="width: 100%"></el-date-picker>
+                <el-form-item label="出生日期" label-width="80px" prop="borth">
+                  <el-date-picker type="date" placeholder="选择出生日期" v-model="addForm.borth"
+                                  style="width: 100%"></el-date-picker>
                 </el-form-item>
               </td>
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="学历" label-width="80px"  prop="edu">
+                <el-form-item label="学历" label-width="80px" prop="edu">
                   <el-select v-model="addForm.edu" filterable placeholder="请选择学历" style="width: 100%">
                     <el-option
                       v-for="item in eduList"
@@ -169,7 +171,7 @@
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="附件" label-width="80px"  prop="aboutFile"  ref="addAboutFile">
+                <el-form-item label="附件" label-width="80px" prop="aboutFile" ref="addAboutFile">
                   <el-upload
                     action="https://jsonplaceholder.typicode.com/posts/"
                     :on-success="addAboutFileSuccess"
@@ -183,8 +185,9 @@
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="备注" label-width="80px"  prop="comment">
-                  <el-input type="textarea" :autosize="{minRows:5}" v-model="addForm.comment"  placeholder="请输入备注"></el-input>
+                <el-form-item label="备注" label-width="80px" prop="comment">
+                  <el-input type="textarea" :autosize="{minRows:5}" v-model="addForm.comment"
+                            placeholder="请输入备注"></el-input>
                 </el-form-item>
               </td>
             </tr>
@@ -207,6 +210,44 @@
         width="50%"
         :center="true"
       >
+        <el-form>
+          <table id="viewTable">
+            <tr>
+              <td class="viewKey">用户名</td>
+              <td class="viewVal">1</td>
+              <td class="viewKey">密码</td>
+              <td class="viewVal">1</td>
+            </tr>
+            <tr>
+              <td class="viewKey">年龄</td>
+              <td class="viewVal">1</td>
+              <td class="viewKey">出生日期</td>
+              <td class="viewVal">1</td>
+            </tr>
+            <tr>
+              <td class="viewKey">学历</td>
+              <td class="viewVal" colspan="3">1</td>
+            </tr>
+            <tr>
+              <td class="viewKey">附件</td>
+              <td class="viewVal" colspan="3">
+                <el-upload
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :on-success="addAboutFileSuccess"
+                  :on-remove="addAboutFileRemove"
+                  :file-list="addForm.aboutFile"
+                  multiple>
+                </el-upload>
+              </td>
+            </tr>
+            <tr>
+              <td class="viewKey">备注</td>
+              <td class="viewVal" colspan="3">Hello</td>
+            </tr>
+          </table>
+
+
+        </el-form>
 
         <span slot="footer" class="dialog-footer"></span>
       </el-dialog>
@@ -236,19 +277,20 @@
             </tr>
             <tr>
               <td>
-                <el-form-item label="年龄" label-width="80px"  prop="age">
-                  <el-input type="number" v-model.number="updateForm.age"  placeholder="请输入年龄"></el-input>
+                <el-form-item label="年龄" label-width="80px" prop="age">
+                  <el-input type="number" v-model.number="updateForm.age" placeholder="请输入年龄"></el-input>
                 </el-form-item>
               </td>
               <td>
-                <el-form-item label="出生日期" label-width="80px"  prop="borth">
-                  <el-date-picker type="date" placeholder="选择出生日期" v-model="updateForm.borth" style="width: 100%"></el-date-picker>
+                <el-form-item label="出生日期" label-width="80px" prop="borth">
+                  <el-date-picker type="date" placeholder="选择出生日期" v-model="updateForm.borth"
+                                  style="width: 100%"></el-date-picker>
                 </el-form-item>
               </td>
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="学历" label-width="80px"  prop="edu">
+                <el-form-item label="学历" label-width="80px" prop="edu">
                   <el-select v-model="updateForm.edu" filterable placeholder="请选择学历" style="width: 100%">
                     <el-option
                       v-for="item in eduList"
@@ -262,7 +304,7 @@
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="附件" label-width="80px"  prop="aboutFile"  ref="updateAboutFile">
+                <el-form-item label="附件" label-width="80px" prop="aboutFile" ref="updateAboutFile">
                   <el-upload
                     action="https://jsonplaceholder.typicode.com/posts/"
                     :on-success="updateAboutFileSuccess"
@@ -276,8 +318,9 @@
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="备注" label-width="80px"  prop="comment">
-                  <el-input type="textarea" :autosize="{minRows:5}" v-model="updateForm.comment"  placeholder="请输入备注"></el-input>
+                <el-form-item label="备注" label-width="80px" prop="comment">
+                  <el-input type="textarea" :autosize="{minRows:5}" v-model="updateForm.comment"
+                            placeholder="请输入备注"></el-input>
                 </el-form-item>
               </td>
             </tr>
@@ -314,37 +357,37 @@
         addDialogVisible: false,  //添加模态框是否可见
         viewDialogVisible: false, //查看模态框是否可见
         updateDialogVisible: false,//修改模态框是否可见
-        eduList:[{   //学历下拉框数组对象
-            value: '1',
-            label: '小学'
-          }, {
-            value: '2',
-            label: '初中'
-          }, {
-            value: '3',
-            label: '高中'
-          }, {
-            value: '4',
-            label: '大专'
-          }, {
-            value: '5',
-            label: '本科'
+        eduList: [{   //学历下拉框数组对象
+          value: '1',
+          label: '小学'
+        }, {
+          value: '2',
+          label: '初中'
+        }, {
+          value: '3',
+          label: '高中'
+        }, {
+          value: '4',
+          label: '大专'
+        }, {
+          value: '5',
+          label: '本科'
         }],
         addForm: {  //添加表单的对象
           username: '',
           password: '',
           age: '',
-          borth:'',
-          edu:'',
-          aboutFile:[]
+          borth: '',
+          edu: '',
+          aboutFile: []
         },
         updateForm: {  //修改表单的对象
           username: '',
           password: '',
           age: '',
-          borth:'',
-          edu:'',
-          aboutFile:[]
+          borth: '',
+          edu: '',
+          aboutFile: []
         },
         editRules: {//编辑时表单的校验规则对象
           username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
@@ -352,7 +395,7 @@
           age: [{required: true, message: '请输入年龄', trigger: 'blur'}],
           borth: [{required: true, message: '请输入出生日期', trigger: 'blur'}],
           edu: [{required: true, message: '请选择学历', trigger: 'blur'}],
-          aboutFile:[{required: true, message: '请选择附件', trigger: 'change'}]
+          aboutFile: [{required: true, message: '请选择附件', trigger: 'change'}]
         }
       }
     },
@@ -397,7 +440,7 @@
         this.tableCurrent = 1;
         this.searchForm.current = this.tableCurrent;
         this.searchForm.size = this.tableCurrentSize;
-        this.searchForm.token=this.token;
+        this.searchForm.token = this.token;
         let searchParams = this.searchForm;
         this.getDataList(searchParams);
       },
@@ -489,22 +532,22 @@
         });
       },
       //添加附件对象上传成功callback
-      addAboutFileSuccess(res, file){
+      addAboutFileSuccess(res, file) {
         this.addForm.aboutFile.push(file);
         this.$refs.addAboutFile.clearValidate();
       },
       //添加附件对象删除成功callback   file:当前删除的附件对象  fileList:删除后剩余的附件集合
-      addAboutFileRemove(file, fileList){
-        this.addForm.aboutFile=fileList;
+      addAboutFileRemove(file, fileList) {
+        this.addForm.aboutFile = fileList;
       },
       //修改附件对象上传成功callback
-      updateAboutFileSuccess(res, file){
+      updateAboutFileSuccess(res, file) {
         this.updateForm.aboutFile.push(file);
         this.$refs.updateAboutFile.clearValidate();
       },
       //修改附件对象删除成功callback  file:当前删除的附件对象  fileList:删除后剩余的附件集合
-      updateAboutFileRemove(file, fileList){
-        this.updateForm.aboutFile=fileList;
+      updateAboutFileRemove(file, fileList) {
+        this.updateForm.aboutFile = fileList;
       },
       //编辑click事件
       handleEdit() {
@@ -533,7 +576,7 @@
        * @param formName  表单的ref名称
        * @param operaName 操作类型名称(add->添加,update->修改)
        */
-      submitEditForm(formName,operaName){
+      submitEditForm(formName, operaName) {
         let _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -545,7 +588,7 @@
         });
       },
       //添加表单Dialog关闭event
-      addDialogClose(){
+      addDialogClose() {
         this.$refs["addForm"].resetFields();
       }
     }
@@ -572,7 +615,27 @@
     margin-top: 10px;
   }
 
-  #addTable,#updateTable{
+  #addTable, #updateTable {
     width: 100%;
+  }
+
+  .viewKey{
+    height: 30px;
+    width: 10%;
+    text-align: center;
+  }
+
+  .viewVal{
+    height: 30px;
+    width: 40%;
+    text-align: left;
+  }
+
+  #viewTable{
+    width: 100%;
+  }
+
+  #viewTable tr{
+    height: 60px;
   }
 </style>
