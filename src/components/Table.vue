@@ -242,7 +242,7 @@
             </tr>
             <tr>
               <td class="viewKey">备注</td>
-              <td class="viewVal" colspan="3">Hello</td>
+              <td class="viewVal" colspan="3">1</td>
             </tr>
           </table>
 
@@ -628,9 +628,14 @@
     width: 100%;
   }
 
+  #viewTable{
+    width: 100%;
+  }
+
+
   .viewKey{
     height: 30px;
-    width: 10%;
+    width: 15%;
     text-align: center;
   }
 
@@ -640,9 +645,6 @@
     text-align: left;
   }
 
-  #viewTable{
-    width: 100%;
-  }
 
   #viewTable tr{
     height: 60px;
