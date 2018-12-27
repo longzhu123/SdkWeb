@@ -171,10 +171,10 @@
               <td colspan="2">
                 <el-form-item label="附件" label-width="80px"  prop="aboutFile">
                   <el-upload
-                    class="upload-demo"
                     action="https://jsonplaceholder.typicode.com/posts/"
                     multiple>
                     <el-button size="small" type="primary">点击上传</el-button>
+                    <el-button size="small" type="primary">下载</el-button>
                   </el-upload>
                 </el-form-item>
               </td>
@@ -182,7 +182,7 @@
             <tr>
               <td colspan="2">
                 <el-form-item label="备注" label-width="80px"  prop="comment">
-                  <el-input type="textarea" v-model="addForm.comment"  placeholder="请输入备注"></el-input>
+                  <el-input type="textarea" :autosize="{minRows:5}" v-model="addForm.comment"  placeholder="请输入备注"></el-input>
                 </el-form-item>
               </td>
             </tr>
