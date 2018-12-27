@@ -3,12 +3,35 @@
     <!--表格搜索工具栏-->
     <div id="searchBar">
       <el-form :model="searchForm" :inline="true" ref="searchForm">
-        <el-form-item prop="ip" label="ip">
-          <el-input placeholder="ip" v-model="searchForm.ip" size="small"></el-input>
+        <el-form-item prop="username" label="用户名">
+          <el-input placeholder="请输入用户名" v-model="searchForm.username" size="small"></el-input>
         </el-form-item>
-        <el-form-item prop="operContent" label="操作内容">
-          <el-input placeholder="操作内容" v-model="searchForm.operContent" size="small"></el-input>
+        <el-form-item prop="password" label="密码">
+          <el-input placeholder="请输入密码" v-model="searchForm.password" size="small"></el-input>
         </el-form-item>
+        <el-form-item prop="age" label="年龄">
+          <el-input placeholder="请输入年龄" type="number" v-model.number="searchForm.age" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="出生日期">
+          <el-form-item prop="beginBorth">
+            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.beginBorth" size="small"></el-date-picker>
+          </el-form-item>
+          <span>-&nbsp;</span>
+          <el-form-item prop="endBorth">
+            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.endBorth" size="small"></el-date-picker>
+          </el-form-item>
+        </el-form-item>
+        <el-form-item prop="edu" label="学历">
+          <el-select v-model="searchForm.edu" filterable placeholder="请选择学历" size="small">
+            <el-option
+              v-for="item in eduList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item>
           <el-button type="primary" size="small" icon="el-icon-search" @click="search">搜索</el-button>
         </el-form-item>
@@ -34,22 +57,34 @@
         width="55">
       </el-table-column>
       <el-table-column
-        prop="ip"
-        label="ip"
+        prop="username"
+        label="用户名"
         align="center"
         show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
-        prop="operContent"
-        label="操作内容"
+        prop="password"
+        label="密码"
         align="center"
         show-overflow-tooltip
       >
       </el-table-column>
       <el-table-column
-        prop="taskTimeSpan"
-        label="操作耗时"
+        prop="age"
+        label="年龄"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="borth"
+        label="出生日期"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
+        prop="edu"
+        label="学历"
         align="center"
         show-overflow-tooltip>
       </el-table-column>
@@ -195,10 +230,26 @@
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
-        token: "729ad6e7b52c40ad947672449fc3a6c1",
+        token: "aa91d4dcb38545a7aeed84a715e33f02",
         addDialogVisible: false,  //添加模态框是否可见
         viewDialogVisible: false, //查看模态框是否可见
         updateDialogVisible: false,//修改模态框是否可见
+        eduList:[{   //学历下拉框数组对象
+            value: '1',
+            label: '小学'
+          }, {
+            value: '2',
+            label: '初中'
+          }, {
+            value: '3',
+            label: '高中'
+          }, {
+            value: '4',
+            label: '大专'
+          }, {
+            value: '5',
+            label: '本科'
+        }],
         addForm: {  //添加表单的对象
           ip: '',
           operContent: '',
@@ -235,7 +286,7 @@
       getDataList(params) {
         let _this = this;
         let options = {
-          url: StringConstants.SERVER_URL + "/sysLogOperate/likeSearchSysLogOperateByPage",
+          url: StringConstants.SERVER_URL + "/sdkTest/likeSearchSdkTestByPage",
           params
         };
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
@@ -289,7 +340,7 @@
             return;
           }
           let options = {
-            url: StringConstants.SERVER_URL + "/sysLogOperate/deleteBatchSysLogOperateByIds",
+            url: StringConstants.SERVER_URL + "/sdkTest/deleteBatchSdkTestByIds",
             params: {"token": this.token, "ids": ids}
           };
           this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
@@ -332,7 +383,7 @@
         //搜索参数对象合并
         let searchOptions = Object.assign(searchForm, pageOptions);
         let options = {
-          url: StringConstants.SERVER_URL + "/sysLogOperate/likeSearchSysLogOperateByPage",
+          url: StringConstants.SERVER_URL + "/sdkTest/likeSearchSdkTestByPage",
           params: searchOptions
         };
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
