@@ -90,7 +90,7 @@
         title="添加"
         :visible.sync="addDialogVisible"
         :center="true"
-        :close="addDialogClose"
+        @close="addDialogClose"
       >
         <el-form :model="addForm" :rules="editRules" ref="addForm">
           <table id="addTable">
@@ -259,6 +259,7 @@
         this.tableCurrent = 1;
         this.searchForm.current = this.tableCurrent;
         this.searchForm.size = this.tableCurrentSize;
+        this.searchForm.token=this.token;
         let searchParams = this.searchForm;
         this.getDataList(searchParams);
       },
@@ -388,7 +389,7 @@
         });
       },
       //添加表单Dialog关闭event
-      addDialogClose(done){
+      addDialogClose(){
         this.$refs["addForm"].resetFields();
       }
     }
