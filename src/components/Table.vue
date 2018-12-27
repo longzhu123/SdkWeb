@@ -131,20 +131,59 @@
           <table id="addTable">
             <tr>
               <td>
-                <el-form-item label="ip" label-width="80px" prop="ip">
-                  <el-input v-model="addForm.ip" placeholder="请输入ip"></el-input>
+                <el-form-item label="用户名" label-width="80px" prop="username">
+                  <el-input v-model="addForm.username" placeholder="请输入用户名"></el-input>
                 </el-form-item>
               </td>
               <td>
-                <el-form-item label="操作内容" label-width="90px" prop="operContent">
-                  <el-input v-model="addForm.operContent" placeholder="请输入操作内容"></el-input>
+                <el-form-item label="密码" label-width="80px" prop="password">
+                  <el-input v-model="addForm.password" placeholder="请输入密码"></el-input>
+                </el-form-item>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <el-form-item label="年龄" label-width="80px"  prop="age">
+                  <el-input type="number" v-model.number="addForm.age"  placeholder="请输入年龄"></el-input>
+                </el-form-item>
+              </td>
+              <td>
+                <el-form-item label="出生日期" label-width="80px"  prop="borth">
+                  <el-date-picker type="date" placeholder="选择出生日期" v-model="addForm.borth" style="width: 100%"></el-date-picker>
                 </el-form-item>
               </td>
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="操作耗时" label-width="80px"  prop="taskTimeSpan">
-                  <el-input type="number" v-model.number="addForm.taskTimeSpan"  placeholder="请输入操作耗时"></el-input>
+                <el-form-item label="学历" label-width="80px"  prop="edu">
+                  <el-select v-model="addForm.edu" filterable placeholder="请选择学历" style="width: 100%">
+                    <el-option
+                      v-for="item in eduList"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <el-form-item label="附件" label-width="80px"  prop="aboutFile">
+                  <el-upload
+                    class="upload-demo"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    multiple>
+                    <el-button size="small" type="primary">点击上传</el-button>
+                  </el-upload>
+                </el-form-item>
+
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <el-form-item label="备注" label-width="80px"  prop="comment">
+                  <el-input type="textarea" v-model="addForm.comment"  placeholder="请输入备注"></el-input>
                 </el-form-item>
               </td>
             </tr>
