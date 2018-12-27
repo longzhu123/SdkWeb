@@ -230,7 +230,7 @@
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
         searchForm: {},//搜索参数对象,
-        token: "aa91d4dcb38545a7aeed84a715e33f02",
+        token: "44fd080323ab4441bd51847eae572012",
         addDialogVisible: false,  //添加模态框是否可见
         viewDialogVisible: false, //查看模态框是否可见
         updateDialogVisible: false,//修改模态框是否可见
