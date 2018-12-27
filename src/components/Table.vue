@@ -169,9 +169,12 @@
             </tr>
             <tr>
               <td colspan="2">
-                <el-form-item label="附件" label-width="80px"  prop="aboutFile">
+                <el-form-item label="附件" label-width="80px"  prop="aboutFile"  ref="addAboutFile">
                   <el-upload
                     action="https://jsonplaceholder.typicode.com/posts/"
+                    :on-success="aboutFileSuccess"
+                    :on-remove="aboutFileRemove"
+                    :file-list="addForm.aboutFile"
                     multiple>
                     <el-button size="small" type="primary">点击上传</el-button>
                     <el-button size="small" type="primary">下载</el-button>
@@ -289,21 +292,28 @@
             label: '本科'
         }],
         addForm: {  //添加表单的对象
-          ip: '',
-          operContent: '',
-          taskTimeSpan: ''
+          username: '',
+          password: '',
+          age: '',
+          borth:'',
+          edu:'',
+          aboutFile:[]
         },
         updateForm: {  //修改表单的对象
-          ip: '',
-          operContent: '',
-          taskTimeSpan: ''
+          username: '',
+          password: '',
+          age: '',
+          borth:'',
+          edu:'',
+          aboutFile:[]
         },
         editRules: {//编辑时表单的校验规则对象
-          ip: [{required: true, message: '请输入ip', trigger: 'blur'}],
-          operContent: [{required: true, message: '请输入操作内容', trigger: 'blur'}],
-          taskTimeSpan: [
-            {required: true, message: '请输入操作耗时'}
-          ],
+          username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+          password: [{required: true, message: '请输入密码', trigger: 'blur'}],
+          age: [{required: true, message: '请输入年龄', trigger: 'blur'}],
+          borth: [{required: true, message: '请输入出生日期', trigger: 'blur'}],
+          edu: [{required: true, message: '请选择学历', trigger: 'blur'}],
+          aboutFile:[{required: true, message: '请选择附件', trigger: 'change'}]
         }
       }
     },
@@ -438,6 +448,19 @@
           console.error(e);
           alert("网络异常");
         });
+      },
+      beforeAboutFileUpload(file){
+        if( this.addForm.aboutFile.length>0){
+          this.$refs.addAboutFile.clearValidate();
+        }
+      },
+      //附件上传成功callback
+      aboutFileSuccess(res, file){
+        this.addForm.aboutFile.push(file);
+      },
+      //删除附件callback  file:当前删除的附件对象  fileList:删除后剩余的附件集合
+      aboutFileRemove(file, fileList){
+        this.addForm.aboutFile=fileList;
       },
       //编辑click事件
       handleEdit() {
