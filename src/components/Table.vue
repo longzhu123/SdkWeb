@@ -90,6 +90,7 @@
         title="添加"
         :visible.sync="addDialogVisible"
         :center="true"
+        :close="addDialogClose"
       >
         <el-form :model="addForm" :rules="editRules" ref="addForm">
           <table id="addTable">
@@ -385,6 +386,10 @@
             return false;
           }
         });
+      },
+      //添加表单Dialog关闭event
+      addDialogClose(done){
+        this.$refs["addForm"].resetFields();
       }
     }
   }
