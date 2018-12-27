@@ -357,7 +357,8 @@
         addDialogVisible: false,  //添加模态框是否可见
         viewDialogVisible: false, //查看模态框是否可见
         updateDialogVisible: false,//修改模态框是否可见
-        eduList: [{   //学历下拉框数组对象
+        eduList: [
+          {   //学历下拉框数组对象
           value: '1',
           label: '小学'
         }, {
@@ -382,6 +383,14 @@
           aboutFile: []
         },
         updateForm: {  //修改表单的对象
+          username: '',
+          password: '',
+          age: '',
+          borth: '',
+          edu: '',
+          aboutFile: []
+        },
+        viewForm:{  //查看详情的表单对象
           username: '',
           password: '',
           age: '',
