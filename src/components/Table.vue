@@ -449,14 +449,10 @@
           alert("网络异常");
         });
       },
-      beforeAboutFileUpload(file){
-        if( this.addForm.aboutFile.length>0){
-          this.$refs.addAboutFile.clearValidate();
-        }
-      },
       //附件上传成功callback
       aboutFileSuccess(res, file){
         this.addForm.aboutFile.push(file);
+        this.$refs.addAboutFile.clearValidate();
       },
       //删除附件callback  file:当前删除的附件对象  fileList:删除后剩余的附件集合
       aboutFileRemove(file, fileList){
