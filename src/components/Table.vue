@@ -558,7 +558,22 @@
       //编辑click事件
       handleEdit(row) {
         this.updateDialogVisible = true;
-        console.log(row);
+        let options = {
+          url: StringConstants.SERVER_URL + "/sdkTest/getSdkTestById",
+          params: {id:row.id}
+        };
+        this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
+          let {status, data} = response;
+          if (status === 200) {
+            let handleData = data.data;
+            this.updateForm=handleData;
+          } else {
+            alert("请求失败")
+          }
+        }).then().catch((e) => {
+          console.error(e);
+          alert("网络异常");
+        });
       },
       //查看click事件
       handleView(row) {
