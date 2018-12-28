@@ -636,8 +636,13 @@
         let _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(operaName);
-            console.log(_this.addForm);
+            if(operaName === "add"){
+              console.log(operaName);
+              console.log(_this.addForm);
+            }else if(operaName === "update"){
+              console.log(operaName);
+              console.log(_this.updateForm);
+            }
           } else {
             return false;
           }
