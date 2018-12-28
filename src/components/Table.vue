@@ -14,12 +14,11 @@
         </el-form-item>
         <el-form-item label="出生日期">
           <el-form-item prop="beginBorth">
-            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.beginBorth"
-                            size="small"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.beginBorth" size="small" :picker-options="beginBorthBefore"></el-date-picker>
           </el-form-item>
           <span>-&nbsp;</span>
           <el-form-item prop="endBorth">
-            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.endBorth" size="small"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.endBorth" size="small" :picker-options="endBorthAfter"></el-date-picker>
           </el-form-item>
         </el-form-item>
         <el-form-item prop="edu" label="学历">
@@ -403,6 +402,24 @@
           borth: [{required: true, message: '请输入出生日期', trigger: 'blur'}],
           edu: [{required: true, message: '请选择学历', trigger: 'blur'}],
           aboutFile: [{required: true, message: '请选择附件', trigger: 'change'}]
+        },
+        //搜索栏中的开始时间日期范围过滤
+        beginBorthBefore:{
+          disabledDate: (time) => {
+            let beginDateVal =  this.searchForm.endBorth;
+            if (beginDateVal) {
+              return time.getTime() > beginDateVal;
+            }
+          }
+        },
+        //搜索栏中的结束时间日期范围过滤
+        endBorthAfter:{
+          disabledDate: (time) => {
+            let beginDateVal = this.searchForm.beginBorth;
+            if (beginDateVal) {
+              return time.getTime() < beginDateVal;
+            }
+          }
         }
       }
     },
@@ -634,6 +651,7 @@
       updateDialogClose() {
         this.$refs["updateForm"].resetFields();
       }
+
     }
   }
 </script>
