@@ -621,8 +621,8 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
         let defaultParams = {
-          current: StringConstants.DEFAULT_PAGE_CURRENT,
-          size: StringConstants.PAGE_SIZE,
+          current:this.tableCurrent,
+          size:this.tableCurrentSize,
           token: this.token
         };
         this.getDataList(defaultParams);
