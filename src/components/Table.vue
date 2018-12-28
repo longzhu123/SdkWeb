@@ -95,13 +95,13 @@
             size="small"
             icon="el-icon-view"
             type="primary"
-            @click="handleView()">查看
+            @click="handleView(scope.row)">查看
           </el-button>
           <el-button
             size="small"
             icon="el-icon-edit"
             type="primary"
-            @click="handleEdit()">修改
+            @click="handleEdit(scope.row)">修改
           </el-button>
         </template>
       </el-table-column>
@@ -214,28 +214,25 @@
           <table id="viewTable">
             <tr>
               <td class="viewKey">用户名</td>
-              <td class="viewVal">1</td>
+              <td class="viewVal">{{viewForm.username}}</td>
               <td class="viewKey">密码</td>
-              <td class="viewVal">1</td>
+              <td class="viewVal">{{viewForm.password}}</td>
             </tr>
             <tr>
               <td class="viewKey">年龄</td>
-              <td class="viewVal">1</td>
+              <td class="viewVal">{{viewForm.age}}</td>
               <td class="viewKey">出生日期</td>
-              <td class="viewVal">1</td>
+              <td class="viewVal">{{viewForm.borth}}</td>
             </tr>
             <tr>
               <td class="viewKey">学历</td>
-              <td class="viewVal" colspan="3">1</td>
+              <td class="viewVal" colspan="3">{{viewForm.edu}}</td>
             </tr>
             <tr>
               <td class="viewKey">附件</td>
               <td class="viewVal" colspan="3">
                 <el-upload
-                  action="https://jsonplaceholder.typicode.com/posts/"
-                  :on-success="addAboutFileSuccess"
-                  :on-remove="addAboutFileRemove"
-                  :file-list="addForm.aboutFile"
+                  :file-list="viewForm.aboutFile"
                   multiple>
                 </el-upload>
               </td>
@@ -559,12 +556,29 @@
         this.updateForm.aboutFile = fileList;
       },
       //编辑click事件
-      handleEdit() {
+      handleEdit(row) {
         this.updateDialogVisible = true;
+        console.log(row);
       },
       //查看click事件
-      handleView() {
+      handleView(row) {
         this.viewDialogVisible = true;
+        let options = {
+          url: StringConstants.SERVER_URL + "/sdkTest/getSdkTestById",
+          params: {id:row.id}
+        };
+        this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
+          let {status, data} = response;
+          if (status === 200) {
+            let handleData = data.data;
+            this.viewForm=handleData;
+          } else {
+            alert("请求失败")
+          }
+        }).catch((e) => {
+          console.error(e);
+          alert("网络异常");
+        });
       },
       //表格Checkbox选择事件
       handleSelectionChange(val) {
