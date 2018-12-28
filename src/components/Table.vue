@@ -257,6 +257,7 @@
         :visible.sync="updateDialogVisible"
         width="50%"
         :center="true"
+        @close="updateDialogClose"
       >
         <el-form :model="updateForm" :rules="editRules" ref="updateForm">
           <table id="updateTable">
@@ -628,6 +629,10 @@
       //添加表单Dialog关闭event
       addDialogClose() {
         this.$refs["addForm"].resetFields();
+      },
+      //修改表单Dialog关闭event
+      updateDialogClose() {
+        this.$refs["updateForm"].resetFields();
       }
     }
   }
