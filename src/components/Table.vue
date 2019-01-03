@@ -14,11 +14,13 @@
         </el-form-item>
         <el-form-item label="出生日期">
           <el-form-item prop="beginBorth">
-            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.beginBorth" size="small" :picker-options="beginBorthBefore"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.beginBorth" size="small"
+                            :picker-options="beginBorthBefore"></el-date-picker>
           </el-form-item>
           <span>-&nbsp;</span>
           <el-form-item prop="endBorth">
-            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.endBorth" size="small" :picker-options="endBorthAfter"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="searchForm.endBorth" size="small"
+                            :picker-options="endBorthAfter"></el-date-picker>
           </el-form-item>
         </el-form-item>
         <el-form-item prop="edu" label="学历">
@@ -121,133 +123,12 @@
 
     <!--添加模态框-->
     <div id="addDialog">
-      <el-dialog
-        title="添加"
-        :visible.sync="addDialogVisible"
-        :center="true"
-        @close="addDialogClose"
-      >
-        <el-form :model="addForm" :rules="editRules" ref="addForm">
-          <table id="addTable">
-            <tr>
-              <td>
-                <el-form-item label="用户名" label-width="80px" prop="username">
-                  <el-input v-model="addForm.username" placeholder="请输入用户名"></el-input>
-                </el-form-item>
-              </td>
-              <td>
-                <el-form-item label="密码" label-width="80px" prop="password">
-                  <el-input v-model="addForm.password" placeholder="请输入密码"></el-input>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <el-form-item label="年龄" label-width="80px" prop="age">
-                  <el-input type="number" v-model.number="addForm.age" placeholder="请输入年龄"></el-input>
-                </el-form-item>
-              </td>
-              <td>
-                <el-form-item label="出生日期" label-width="80px" prop="borth">
-                  <el-date-picker type="date" placeholder="选择出生日期" v-model="addForm.borth"
-                                  style="width: 100%"></el-date-picker>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <el-form-item label="学历" label-width="80px" prop="edu">
-                  <el-select v-model="addForm.edu" filterable placeholder="请选择学历" style="width: 100%">
-                    <el-option
-                      v-for="item in eduList"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <el-form-item label="附件" label-width="80px" prop="aboutFile" ref="addAboutFile">
-                  <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :on-success="addAboutFileSuccess"
-                    :on-remove="addAboutFileRemove"
-                    :file-list="addForm.aboutFile"
-                    multiple>
-                    <el-button size="small" type="primary">点击上传</el-button>
-                  </el-upload>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <el-form-item label="备注" label-width="80px" prop="comment">
-                  <el-input type="textarea" :autosize="{minRows:5}" v-model="addForm.comment"
-                            placeholder="请输入备注"></el-input>
-                </el-form-item>
-              </td>
-            </tr>
-          </table>
-        </el-form>
-
-        <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitEditForm('addForm','add')">保 存</el-button>
-      </span>
-      </el-dialog>
-
+      <Add :addDialogVisible="addDialogVisible" :eduList="eduList" :editRules="editRules" @closeAddDialog="closeAddDialog"/>
     </div>
 
     <!--查看详情模态框-->
     <div id="viewDetailDialog">
-      <el-dialog
-        title="查看详情"
-        :visible.sync="viewDialogVisible"
-        width="50%"
-        :center="true"
-      >
-        <el-form>
-          <table id="viewTable">
-            <tr>
-              <td class="viewKey">用户名</td>
-              <td class="viewVal">{{viewForm.username}}</td>
-              <td class="viewKey">密码</td>
-              <td class="viewVal">{{viewForm.password}}</td>
-            </tr>
-            <tr>
-              <td class="viewKey">年龄</td>
-              <td class="viewVal">{{viewForm.age}}</td>
-              <td class="viewKey">出生日期</td>
-              <td class="viewVal">{{viewForm.borth}}</td>
-            </tr>
-            <tr>
-              <td class="viewKey">学历</td>
-              <td class="viewVal" colspan="3">{{viewForm.edu}}</td>
-            </tr>
-            <tr>
-              <td class="viewKey">附件</td>
-              <td class="viewVal" colspan="3">
-                <el-upload
-                  :file-list="viewForm.aboutFile"
-                  multiple>
-                </el-upload>
-              </td>
-            </tr>
-            <tr>
-              <td class="viewKey">备注</td>
-              <td class="viewVal" colspan="3">1</td>
-            </tr>
-          </table>
-
-
-        </el-form>
-
-        <span slot="footer" class="dialog-footer"></span>
-      </el-dialog>
-
+      <ViewDetail :viewDialogVisible="viewDialogVisible" @closeViewDialog="closeViewDialog" :viewForm="viewForm"/>
     </div>
     <!--修改模态框-->
     <div id="updateDialog">
@@ -338,9 +219,12 @@
 <script>
   import * as StringConstants from "../constants/StringConstants";
   import util from "../util/util";
+  import Add from "./Add";
+  import ViewDetail from "./View";
 
   export default {
     name: 'Table',
+    components: {Add,ViewDetail},
     //存放全局数据
     data() {
       return {
@@ -354,31 +238,6 @@
         addDialogVisible: false,  //添加模态框是否可见
         viewDialogVisible: false, //查看模态框是否可见
         updateDialogVisible: false,//修改模态框是否可见
-        eduList: [
-          {   //学历下拉框数组对象
-          value: '1',
-          label: '小学'
-        }, {
-          value: '2',
-          label: '初中'
-        }, {
-          value: '3',
-          label: '高中'
-        }, {
-          value: '4',
-          label: '大专'
-        }, {
-          value: '5',
-          label: '本科'
-        }],
-        addForm: {  //添加表单的对象
-          username: '',
-          password: '',
-          age: '',
-          borth: '',
-          edu: '',
-          aboutFile: []
-        },
         updateForm: {  //修改表单的对象
           username: '',
           password: '',
@@ -387,7 +246,7 @@
           edu: '',
           aboutFile: []
         },
-        viewForm:{  //查看详情的表单对象
+        viewForm: {  //查看详情的表单对象
           username: '',
           password: '',
           age: '',
@@ -395,6 +254,23 @@
           edu: '',
           aboutFile: []
         },
+        eduList: [
+          {   //学历下拉框数组对象
+            value: '1',
+            label: '小学'
+          }, {
+            value: '2',
+            label: '初中'
+          }, {
+            value: '3',
+            label: '高中'
+          }, {
+            value: '4',
+            label: '大专'
+          }, {
+            value: '5',
+            label: '本科'
+          }],
         editRules: {//编辑时表单的校验规则对象
           username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
           password: [{required: true, message: '请输入密码', trigger: 'blur'}],
@@ -404,16 +280,16 @@
           aboutFile: [{required: true, message: '请选择附件', trigger: 'change'}]
         },
         //搜索栏中的开始时间日期范围过滤
-        beginBorthBefore:{
+        beginBorthBefore: {
           disabledDate: (time) => {
-            let beginDateVal =  this.searchForm.endBorth;
+            let beginDateVal = this.searchForm.endBorth;
             if (beginDateVal) {
               return time.getTime() > beginDateVal;
             }
           }
         },
         //搜索栏中的结束时间日期范围过滤
-        endBorthAfter:{
+        endBorthAfter: {
           disabledDate: (time) => {
             let beginDateVal = this.searchForm.beginBorth;
             if (beginDateVal) {
@@ -578,13 +454,13 @@
         this.updateDialogVisible = true;
         let options = {
           url: StringConstants.SERVER_URL + "/sdkTest/getSdkTestById",
-          params: {id:row.id}
+          params: {id: row.id}
         };
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
           let {status, data} = response;
           if (status === 200) {
             let handleData = data.data;
-            this.updateForm=handleData;
+            this.updateForm = handleData;
           } else {
             alert("请求失败")
           }
@@ -595,16 +471,17 @@
       },
       //查看click事件
       handleView(row) {
+        debugger;
         this.viewDialogVisible = true;
         let options = {
           url: StringConstants.SERVER_URL + "/sdkTest/getSdkTestById",
-          params: {id:row.id}
+          params: {id: row.id}
         };
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
           let {status, data} = response;
           if (status === 200) {
             let handleData = data.data;
-            this.viewForm=handleData;
+            this.viewForm = handleData;
           } else {
             alert("请求失败")
           }
@@ -621,8 +498,8 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
         let defaultParams = {
-          current:this.tableCurrent,
-          size:this.tableCurrentSize,
+          current: this.tableCurrent,
+          size: this.tableCurrentSize,
           token: this.token
         };
         this.getDataList(defaultParams);
@@ -636,10 +513,10 @@
         let _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            if(operaName === "add"){
+            if (operaName === "add") {
               console.log(operaName);
               console.log(_this.addForm);
-            }else if(operaName === "update"){
+            } else if (operaName === "update") {
               console.log(operaName);
               console.log(_this.updateForm);
             }
@@ -648,9 +525,13 @@
           }
         });
       },
-      //添加表单Dialog关闭event
-      addDialogClose() {
-        this.$refs["addForm"].resetFields();
+      //关闭添加模态框
+      closeAddDialog(val){
+        this.addDialogVisible=val;
+      },
+      //关闭查看详情模态框
+      closeViewDialog(val){
+        this.viewDialogVisible=val;
       },
       //修改表单Dialog关闭event
       updateDialogClose() {
@@ -679,31 +560,5 @@
     text-align: right;
     margin-right: 30px;
     margin-top: 10px;
-  }
-
-  #addTable, #updateTable {
-    width: 100%;
-  }
-
-  #viewTable{
-    width: 100%;
-  }
-
-
-  .viewKey{
-    height: 30px;
-    width: 15%;
-    text-align: center;
-  }
-
-  .viewVal{
-    height: 30px;
-    width: 40%;
-    text-align: left;
-  }
-
-
-  #viewTable tr{
-    height: 60px;
   }
 </style>
