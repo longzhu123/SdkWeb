@@ -375,7 +375,6 @@
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
           let {status, data} = response;
           if (status === 200) {
-            debugger;
             let handleData = data.data;
             this.updateForm = handleData;
           } else {

@@ -126,7 +126,6 @@
       },
       //修改附件对象上传成功callback
       updateAboutFileSuccess(res, file) {
-        debugger;
         this.updateForm.aboutFile.push(file);
         this.$refs.updateAboutFile.clearValidate();
       },

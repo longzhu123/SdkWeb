@@ -122,7 +122,6 @@
       },
       //监听添加表单Dialog关闭event
       addDialogClose() {
-        debugger;
         this.$refs["addForm"].resetFields();
         this.$emit("closeAddDialog", false);
       },
