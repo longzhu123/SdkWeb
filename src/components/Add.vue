@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     title="添加"
-    :visible.sync="addDialogVisible"
+    :visible="addDialogVisible"
     :center="true"
     @close="addDialogClose"
   >
@@ -80,51 +80,51 @@
 
 <script>
   export default {
-  name: 'Add',
-  props:{
-    addDialogVisible:{
-      type:Boolean,
-      required:true
+    name: 'Add',
+    props: {
+      addDialogVisible: {
+        type: Boolean,
+        required: true
+      },
+      eduList: {
+        type: Array,
+        required: true
+      },
+      editRules: {
+        type: Object,
+        required: true
+      }
     },
-    eduList:{
-      type:Array,
-      required:true
-    },
-    editRules:{
-      type:Object,
-      required:true
-    }
-  },
-  data () {
-    return {
-      addForm: {  //添加表单的对象
-         username: '',
-         password: '',
-         age: '',
-         borth: '',
-         edu: '',
-         aboutFile: []
+    data() {
+      return {
+        addForm: {  //添加表单的对象
+          username: '',
+          password: '',
+          age: '',
+          borth: '',
+          edu: '',
+          aboutFile: []
         }
-    }
-  },
-  //页面加载方法
-  mounted() {
-      
-  },
-  methods: {
+      }
+    },
+    //页面加载方法
+    mounted() {
+    },
+    methods: {
       //添加附件对象上传成功callback
       addAboutFileSuccess(res, file) {
         this.addForm.aboutFile.push(file);
         this.$refs.addAboutFile.clearValidate();
       },
-       //添加附件对象删除成功callback   file:当前删除的附件对象  fileList:删除后剩余的附件集合
+      //添加附件对象删除成功callback   file:当前删除的附件对象  fileList:删除后剩余的附件集合
       addAboutFileRemove(file, fileList) {
         this.addForm.aboutFile = fileList;
       },
       //监听添加表单Dialog关闭event
       addDialogClose() {
+        debugger;
         this.$refs["addForm"].resetFields();
-        this.$emit("closeAddDialog",false);
+        this.$emit("closeAddDialog", false);
       },
       //编辑表单提交事件
       submitEditForm(formName) {
@@ -139,20 +139,19 @@
         });
       },
       //关闭添加模态事件
-      closeAddDialog(){
+      closeAddDialog() {
         //调用父组件的closeAddDialog属性方法
-          this.$emit("closeAddDialog",false);
+        this.$emit("closeAddDialog", false);
       }
+    }
+
   }
-    
-}
 
 </script>
 
 
-
 <style scoped>
-  #addTable{
+  #addTable {
     width: 100%;
   }
 </style>

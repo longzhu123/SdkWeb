@@ -24,7 +24,7 @@
           </el-form-item>
         </el-form-item>
         <el-form-item prop="edu" label="学历">
-          <el-select v-model="searchForm.edu" filterable placeholder="请选择学历" size="small">
+          <el-select v-model="searchForm.edu" filterable placeholder="请选择学历" size="small" class="selectEduMain">
             <el-option
               v-for="item in eduList"
               :key="item.value"
@@ -123,7 +123,8 @@
 
     <!--添加模态框-->
     <div id="addDialog">
-      <Add :addDialogVisible="addDialogVisible" :eduList="eduList" :editRules="editRules" @closeAddDialog="closeAddDialog"/>
+      <Add :addDialogVisible="addDialogVisible" :eduList="eduList" :editRules="editRules"
+           @closeAddDialog="closeAddDialog"/>
     </div>
 
     <!--查看详情模态框-->
@@ -132,84 +133,8 @@
     </div>
     <!--修改模态框-->
     <div id="updateDialog">
-      <el-dialog
-        title="修改"
-        :visible.sync="updateDialogVisible"
-        width="50%"
-        :center="true"
-        @close="updateDialogClose"
-      >
-        <el-form :model="updateForm" :rules="editRules" ref="updateForm">
-          <table id="updateTable">
-            <tr>
-              <td>
-                <el-form-item label="用户名" label-width="80px" prop="username">
-                  <el-input v-model="updateForm.username" placeholder="请输入用户名"></el-input>
-                </el-form-item>
-              </td>
-              <td>
-                <el-form-item label="密码" label-width="80px" prop="password">
-                  <el-input v-model="updateForm.password" placeholder="请输入密码"></el-input>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <el-form-item label="年龄" label-width="80px" prop="age">
-                  <el-input type="number" v-model.number="updateForm.age" placeholder="请输入年龄"></el-input>
-                </el-form-item>
-              </td>
-              <td>
-                <el-form-item label="出生日期" label-width="80px" prop="borth">
-                  <el-date-picker type="date" placeholder="选择出生日期" v-model="updateForm.borth"
-                                  style="width: 100%"></el-date-picker>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <el-form-item label="学历" label-width="80px" prop="edu">
-                  <el-select v-model="updateForm.edu" filterable placeholder="请选择学历" style="width: 100%">
-                    <el-option
-                      v-for="item in eduList"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <el-form-item label="附件" label-width="80px" prop="aboutFile" ref="updateAboutFile">
-                  <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :on-success="updateAboutFileSuccess"
-                    :on-remove="updateAboutFileRemove"
-                    :file-list="updateForm.aboutFile"
-                    multiple>
-                    <el-button size="small" type="primary">点击上传</el-button>
-                  </el-upload>
-                </el-form-item>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <el-form-item label="备注" label-width="80px" prop="comment">
-                  <el-input type="textarea" :autosize="{minRows:5}" v-model="updateForm.comment"
-                            placeholder="请输入备注"></el-input>
-                </el-form-item>
-              </td>
-            </tr>
-          </table>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-        <el-button @click="updateDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitEditForm('updateForm','update')">保 存</el-button>
-      </span>
-      </el-dialog>
-
+      <Update :updateDialogVisible="updateDialogVisible" @closeUpdateDialog="closeUpdateDialog" :updateObj="updateForm"
+              :editRules="editRules" :eduList="eduList"/>
     </div>
 
   </div>
@@ -221,10 +146,12 @@
   import util from "../util/util";
   import Add from "./Add";
   import ViewDetail from "./View";
+  import Update from "./Update";
+
 
   export default {
     name: 'Table',
-    components: {Add,ViewDetail},
+    components: {Add, ViewDetail, Update},
     //存放全局数据
     data() {
       return {
@@ -233,7 +160,14 @@
         tableCurrentSize: 10,//表格当前显示的记录数
         tableTotalSize: 0,//表格的总记录数
         tableSelection: [],//表格被选中的对象
-        searchForm: {},//搜索参数对象,
+        searchForm: {//搜索参数对象
+          username:'',
+          password:'',
+          age:'',
+          beginBorth:'',
+          endBorth:'',
+          edu:[]
+        },
         token: "44fd080323ab4441bd51847eae572012",
         addDialogVisible: false,  //添加模态框是否可见
         viewDialogVisible: false, //查看模态框是否可见
@@ -276,7 +210,7 @@
           password: [{required: true, message: '请输入密码', trigger: 'blur'}],
           age: [{required: true, message: '请输入年龄', trigger: 'blur'}],
           borth: [{required: true, message: '请输入出生日期', trigger: 'blur'}],
-          edu: [{required: true, message: '请选择学历', trigger: 'blur'}],
+          edu: [{required: true, message: '请选择学历', trigger: ['blur','change']}],
           aboutFile: [{required: true, message: '请选择附件', trigger: 'change'}]
         },
         //搜索栏中的开始时间日期范围过滤
@@ -431,24 +365,6 @@
           alert("网络异常");
         });
       },
-      //添加附件对象上传成功callback
-      addAboutFileSuccess(res, file) {
-        this.addForm.aboutFile.push(file);
-        this.$refs.addAboutFile.clearValidate();
-      },
-      //添加附件对象删除成功callback   file:当前删除的附件对象  fileList:删除后剩余的附件集合
-      addAboutFileRemove(file, fileList) {
-        this.addForm.aboutFile = fileList;
-      },
-      //修改附件对象上传成功callback
-      updateAboutFileSuccess(res, file) {
-        this.updateForm.aboutFile.push(file);
-        this.$refs.updateAboutFile.clearValidate();
-      },
-      //修改附件对象删除成功callback  file:当前删除的附件对象  fileList:删除后剩余的附件集合
-      updateAboutFileRemove(file, fileList) {
-        this.updateForm.aboutFile = fileList;
-      },
       //编辑click事件
       handleEdit(row) {
         this.updateDialogVisible = true;
@@ -459,6 +375,7 @@
         this.axios.post(options.url, JSON.stringify(options.params), {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then((response) => {
           let {status, data} = response;
           if (status === 200) {
+            debugger;
             let handleData = data.data;
             this.updateForm = handleData;
           } else {
@@ -471,7 +388,6 @@
       },
       //查看click事件
       handleView(row) {
-        debugger;
         this.viewDialogVisible = true;
         let options = {
           url: StringConstants.SERVER_URL + "/sdkTest/getSdkTestById",
@@ -496,47 +412,29 @@
       },
       //重置搜索表单click事件
       resetForm(formName) {
+        console.log(this.searchForm);
         this.$refs[formName].resetFields();
         let defaultParams = {
           current: this.tableCurrent,
           size: this.tableCurrentSize,
           token: this.token
         };
+        console.log(this.searchForm);
         this.getDataList(defaultParams);
       },
-      /**
-       * 提交编辑form
-       * @param formName  表单的ref名称
-       * @param operaName 操作类型名称(add->添加,update->修改)
-       */
-      submitEditForm(formName, operaName) {
-        let _this = this;
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            if (operaName === "add") {
-              console.log(operaName);
-              console.log(_this.addForm);
-            } else if (operaName === "update") {
-              console.log(operaName);
-              console.log(_this.updateForm);
-            }
-          } else {
-            return false;
-          }
-        });
-      },
       //关闭添加模态框
-      closeAddDialog(val){
-        this.addDialogVisible=val;
+      closeAddDialog(val) {
+        this.addDialogVisible = val;
       },
       //关闭查看详情模态框
-      closeViewDialog(val){
-        this.viewDialogVisible=val;
+      closeViewDialog(val) {
+        this.viewDialogVisible = val;
       },
-      //修改表单Dialog关闭event
-      updateDialogClose() {
-        this.$refs["updateForm"].resetFields();
-      }
+      //关闭修改模态框
+      closeUpdateDialog(val) {
+        this.updateDialogVisible = val;
+      },
+
 
     }
   }
