@@ -36,7 +36,7 @@
         <tr>
           <td colspan="2">
             <el-form-item label="学历" label-width="80px" prop="edu">
-              <el-select v-model="updateForm.edu" filterable placeholder="请选择学历" style="width: 80%">
+              <el-select v-model="updateForm.edu" filterable placeholder="请选择学历" style="width: 100%">
                 <el-option
                   v-for="item in eduList"
                   :key="item.value"
